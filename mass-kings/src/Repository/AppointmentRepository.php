@@ -19,32 +19,28 @@ class AppointmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Appointment::class);
     }
 
-    // /**
-    //  * @return Appointment[] Returns an array of Appointment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function hasAppointmentAt(\DateTimeImmutable $date) :bool
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('1')
+            ->where('a.time BETWEEN :startTime AND :endTime')
+            ->setParameters([
+                'startTime' => $this->roundToPreviousHour($date),
+                'endTime' => $this->roundToNextHour($date)
+            ])
+            ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult() ? true : false;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Appointment
+    private function roundToPreviousHour(\DateTimeImmutable $date) :\DateTimeImmutable
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return (new \DateTimeImmutable())->setTime($date->format('H'), 0, 0);
     }
-    */
+
+    private function roundToNextHour(\DateTimeImmutable $date) : \DateTimeImmutable
+    {
+        return \DateTimeImmutable::createFromMutable((\DateTime::createFromImmutable($this->roundToPreviousHour($date)))
+            ->add(new \DateInterval('PT1H')));
+    }
 }
