@@ -1,0 +1,59 @@
+<?php
+
+$fileHeaderComment = <<<COMMENT
+This file is part of the Mass-Kings package.
+
+(c) Victor Odusanya <odusanya18@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+COMMENT;
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+    ->exclude('config')
+    ->exclude('var')
+    ->exclude('public/bundles')
+    ->exclude('public/build')
+    ->notPath('bin/console')
+    ->notPath('public/index.php')
+    ->notPath('src/Kernel.php')
+    ->notPath('src/Migrations')
+;
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        '@PSR2' => true,
+        'blank_line_after_opening_tag' => true,
+        'compact_nullable_typehint' => true,
+        'declare_equal_normalize' => ['space' => 'none'],
+        'function_typehint_space' => true,
+        'new_with_braces' => true,
+        'no_empty_statement' => true,
+        'no_leading_import_slash' => true,
+        'no_leading_namespace_whitespace' => true,
+        'no_whitespace_in_blank_line' => true,
+        'return_type_declaration' => ['space_before' => 'none'],
+        'single_trait_insert_per_statement' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both'],
+        'linebreak_after_opening_tag' => true,
+        'mb_str_functions' => true,
+        'no_php4_constructor' => true,
+        'no_superfluous_phpdoc_tags' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'php_unit_strict' => true,
+        'phpdoc_order' => true,
+        'semicolon_after_instruction' => true,
+        'strict_comparison' => true,
+        'strict_param' => true,
+    ])
+    ->setFinder($finder)
+    ->setCacheFile(__DIR__.'/var/.php_cs.cache')
+;

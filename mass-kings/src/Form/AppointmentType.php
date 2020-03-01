@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Mass-Kings package.
+ *
+ * (c) Victor Odusanya <odusanya18@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form;
 
 use App\Entity\Appointment;
@@ -14,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AppointmentType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options) :void
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('package', ChoiceType::class, [
@@ -25,16 +34,16 @@ class AppointmentType extends AbstractType
                     'Xtreme Exterior Detail' => Package::EXTERIOR,
                     'Ultimate  Int/Ext Detail' => Package::ULTIMATE,
                     'Touch Up Detail' => Package::TOUCHUP,
-                    'Additional Services' => Package::ADDITIONAL
-                ]
+                    'Additional Services' => Package::ADDITIONAL,
+                ],
             ])
             ->add('car_size', ChoiceType::class, [
                 'placeholder' => 'Choose a Car Size',
                 'choices' => [
                     'Small Cars' => Car::SMALL,
                     'Mid Size SUV and Pickups' => Car::MIDSIZE,
-                    'Bigger SUV, Vans and Pickups' => Car::BIGSIZE
-                ]
+                    'Bigger SUV, Vans and Pickups' => Car::BIGSIZE,
+                ],
             ])
             ->add('location')
             ->add('time')
@@ -44,7 +53,7 @@ class AppointmentType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver) :void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Appointment::class,

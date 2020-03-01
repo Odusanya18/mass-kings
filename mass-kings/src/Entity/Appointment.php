@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Mass-Kings package.
+ *
+ * (c) Victor Odusanya <odusanya18@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
-use App\Validator\Package;
 use App\Validator\Car;
+use App\Validator\Name;
+use App\Validator\Package;
 use App\Validator\Phone;
 use App\Validator\Time;
-use App\Validator\Name;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -149,7 +158,7 @@ class Appointment
         return $this;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         //package
         $metadata->addPropertyConstraint('package', new NotBlank());
@@ -176,6 +185,5 @@ class Appointment
 
         //contact_email
         $metadata->addPropertyConstraint('contact_email', new Email());
-
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Mass-Kings package.
+ *
+ * (c) Victor Odusanya <odusanya18@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Validator;
 
 use App\Repository\AppointmentRepository;
@@ -15,7 +24,7 @@ class TimeValidator extends ConstraintValidator
         $this->appointmentRepository = $appointmentRepository;
     }
 
-    public function validate($value, Constraint $constraint) :void
+    public function validate($value, Constraint $constraint): void
     {
         /* @var $constraint \App\Validator\Time */
 
@@ -27,11 +36,11 @@ class TimeValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Time::class);
         }
 
-        if (!$value instanceof \DateTimeImmutable){
+        if (!$value instanceof \DateTimeImmutable) {
             throw new UnexpectedValueException($value, 'datetimetz_immutable');
         }
-        
-        if ($value < new \DateTimeImmutable('+1 hour')){
+
+        if ($value < new \DateTimeImmutable('+1 hour')) {
             $this->context->buildViolation('Appointment time {{ time }} must at least an hour ahead.')
             ->setParameter('{{ time }}', $value->format(\DateTimeInterface::RSS))
             ->addViolation();
@@ -39,11 +48,10 @@ class TimeValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->appointmentRepository->hasAppointmentAt($value)){
+        if ($this->appointmentRepository->hasAppointmentAt($value)) {
             $this->context->buildViolation($constraint->message)
             ->setParameter('{{ time }}', $value->format(\DateTimeInterface::RSS))
             ->addViolation();
         }
-        
     }
 }
