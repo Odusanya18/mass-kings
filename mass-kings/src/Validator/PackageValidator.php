@@ -16,6 +16,10 @@ class PackageValidator extends ConstraintValidator
             return;
         }
 
+        if (!$constraint instanceof Package) {
+            throw new UnexpectedTypeException($constraint, Package::class);
+        }
+
         if (!is_integer($value)){
             throw new UnexpectedValueException($value, 'int');
         }

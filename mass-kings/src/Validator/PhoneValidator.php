@@ -15,6 +15,10 @@ class PhoneValidator extends ConstraintValidator
             return;
         }
 
+        if (!$constraint instanceof Phone) {
+            throw new UnexpectedTypeException($constraint, Phone::class);
+        }
+
         if (!is_string($value)){
             throw new UnexpectedValueException($value, 'string');
         }

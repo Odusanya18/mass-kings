@@ -23,7 +23,11 @@ class TimeValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value instanceof DateTimeImmutable){
+        if (!$constraint instanceof Time) {
+            throw new UnexpectedTypeException($constraint, Time::class);
+        }
+
+        if (!$value instanceof \DateTimeImmutable){
             throw new UnexpectedValueException($value, 'datetimetz_immutable');
         }
         

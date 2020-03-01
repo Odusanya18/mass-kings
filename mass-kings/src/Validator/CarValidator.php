@@ -15,6 +15,10 @@ class CarValidator extends ConstraintValidator
             return;
         }
 
+        if (!$constraint instanceof Car) {
+            throw new UnexpectedTypeException($constraint, Car::class);
+        }
+
         if (!is_integer($value)){
             throw new UnexpectedValueException($value, 'int');
         }
