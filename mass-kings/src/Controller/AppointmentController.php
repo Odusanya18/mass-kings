@@ -27,7 +27,6 @@ class AppointmentController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        dump($this->appointmentRepository->hasAppointmentAt(new \DateTimeImmutable('now')));
         $appointment = new Appointment();
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);
