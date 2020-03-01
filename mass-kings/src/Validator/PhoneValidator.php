@@ -15,9 +15,14 @@ class PhoneValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ value }}', $value)
+        if (!is_string($value)){
+            throw new UnexpectedValueException($value, 'string');
+        }
+
+        if (!preg_match('/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm', $value)){
+            $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ phone }}', $value)
             ->addViolation();
+        }
     }
 }
