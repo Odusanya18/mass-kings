@@ -15,13 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AppointmentController extends AbstractController
 {
-    private $appointmentRepository;
-
-    public function __construct(AppointmentRepository $appointmentRepository)
-    {
-        $this->appointmentRepository = $appointmentRepository;
-    }
-
     /**
      * @Route("/new", name="appointment_new", methods={"GET","POST"})
      */

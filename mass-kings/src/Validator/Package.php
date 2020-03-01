@@ -13,5 +13,5 @@ class Package extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public $message = 'The value "{{ value }}" is not valid.';
+    public $message = 'The Package "{{ package }}" selected is not valid.';
 }

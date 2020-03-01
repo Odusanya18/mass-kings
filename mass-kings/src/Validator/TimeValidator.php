@@ -2,11 +2,19 @@
 
 namespace App\Validator;
 
+use App\Repository\AppointmentRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class TimeValidator extends ConstraintValidator
 {
+    private $appointmentRepository;
+
+    public function __construct(AppointmentRepository $appointmentRepository)
+    {
+        $this->appointmentRepository = $appointmentRepository;
+    }
+
     public function validate($value, Constraint $constraint)
     {
         /* @var $constraint \App\Validator\Time */
@@ -15,9 +23,23 @@ class TimeValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ value }}', $value)
+        if (!$value instanceof DateTimeImmutable){
+            throw new UnexpectedValueException($value, 'datetimetz_immutable');
+        }
+        
+        if ($value < new \DateTimeImmutable('+1 hour')){
+            $this->context->buildViolation('Appointment time {{ time }} must at least an hour ahead.')
+            ->setParameter('{{ time }}', $value)
             ->addViolation();
+
+            return;
+        }
+
+        if ($this->appointmentRepository->hasAppointmentAt($value)){
+            $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ time }}', $value)
+            ->addViolation();
+        }
+        
     }
 }

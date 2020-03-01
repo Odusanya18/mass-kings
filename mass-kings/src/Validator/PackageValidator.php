@@ -4,6 +4,7 @@ namespace App\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class PackageValidator extends ConstraintValidator
 {
@@ -15,9 +16,15 @@ class PackageValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ value }}', $value)
+        if (!is_integer($value)){
+            throw new UnexpectedValueException($value, 'int');
+        }
+
+        $packages = (new \ReflectionClass(\App\Entity\Package::class))->getConstants();
+        if (!in_array($value, $packages)){
+            $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ package }}', $value)
             ->addViolation();
+        }
     }
 }
