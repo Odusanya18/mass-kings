@@ -7,11 +7,11 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class Phone extends Constraint
+class Name extends Constraint
 {
     /*
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public $message = 'The phone "{{ phone }}" entered is not valid, format has to be like +1 (xxx) xxx-xxxx.';
+    public $message = 'The Contact name "{{ name }}" does not appear real.';
 }

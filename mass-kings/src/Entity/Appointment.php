@@ -2,6 +2,11 @@
 
 namespace App\Entity;
 
+use App\Validator\Package;
+use App\Validator\Car;
+use App\Validator\Phone;
+use App\Validator\Time;
+use App\Validator\Name;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -9,6 +14,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AppointmentRepository")
+ * @ORM\Table(name="appointment",indexes={@ORM\Index(name="time_valid_idx", columns={"time"})})
  */
 class Appointment
 {
@@ -24,7 +30,7 @@ class Appointment
      */
     private $package;
 
-    /**
+    /**use App\Validator\Time;
      * @ORM\Column(type="integer")
      */
     private $car_size;
@@ -147,25 +153,26 @@ class Appointment
     {
         //package
         $metadata->addPropertyConstraint('package', new NotBlank());
-        $metadata->addPropertyConstraint('package', new \App\Validator\Package());
+        $metadata->addPropertyConstraint('package', new Package());
 
-        //phone
-        $metadata->addPropertyConstraint('phone', new NotBlank());
-        $metadata->addPropertyConstraint('phone', new \App\Validator\Phone());
+        //contact_phone
+        $metadata->addPropertyConstraint('contact_phone', new NotBlank());
+        $metadata->addPropertyConstraint('contact_phone', new Phone());
 
         //time
         $metadata->addPropertyConstraint('time', new NotBlank());
-        $metadata->addPropertyConstraint('time', new \App\Validator\Time());
+        $metadata->addPropertyConstraint('time', new Time());
 
         //car_size
         $metadata->addPropertyConstraint('car_size', new NotBlank());
-        $metadata->addPropertyConstraint('car_size', new \App\Validator\Car());
+        $metadata->addPropertyConstraint('car_size', new Car());
 
         //location
         $metadata->addPropertyConstraint('location', new NotBlank());
 
         //contact_name
         $metadata->addPropertyConstraint('contact_name', new NotBlank());
+        $metadata->addPropertyConstraint('contact_name', new Name());
 
         //contact_email
         $metadata->addPropertyConstraint('contact_email', new Email());

@@ -18,6 +18,7 @@ class AppointmentType extends AbstractType
     {
         $builder
             ->add('package', ChoiceType::class, [
+                'placeholder' => 'Choose a Package Type',
                 'choices' => [
                     'Reset Interior Detail' => Package::INTERIOR,
                     'Hand Wash and Wax' => Package::HANDWASH,
@@ -28,6 +29,7 @@ class AppointmentType extends AbstractType
                 ]
             ])
             ->add('car_size', ChoiceType::class, [
+                'placeholder' => 'Choose a Car Size',
                 'choices' => [
                     'Small Cars' => Car::SMALL,
                     'Mid Size SUV and Pickups' => Car::MIDSIZE,

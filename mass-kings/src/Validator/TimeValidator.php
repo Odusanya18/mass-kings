@@ -33,7 +33,7 @@ class TimeValidator extends ConstraintValidator
         
         if ($value < new \DateTimeImmutable('+1 hour')){
             $this->context->buildViolation('Appointment time {{ time }} must at least an hour ahead.')
-            ->setParameter('{{ time }}', $value)
+            ->setParameter('{{ time }}', $value->format(\DateTimeInterface::RSS))
             ->addViolation();
 
             return;
@@ -41,7 +41,7 @@ class TimeValidator extends ConstraintValidator
 
         if ($this->appointmentRepository->hasAppointmentAt($value)){
             $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ time }}', $value)
+            ->setParameter('{{ time }}', $value->format(\DateTimeInterface::RSS))
             ->addViolation();
         }
         
