@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AppointmentRepository")
@@ -138,5 +141,34 @@ class Appointment
         $this->contact_email = $contact_email;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        //package
+        $metadata->addPropertyConstraint('package', new NotBlank());
+        $metadata->addPropertyConstraint('package', new \App\Validator\Package());
+
+        //phone
+        $metadata->addPropertyConstraint('phone', new NotBlank());
+        $metadata->addPropertyConstraint('phone', new \App\Validator\Phone());
+
+        //time
+        $metadata->addPropertyConstraint('time', new NotBlank());
+        $metadata->addPropertyConstraint('time', new \App\Validator\Time());
+
+        //car_size
+        $metadata->addPropertyConstraint('car_size', new NotBlank());
+        $metadata->addPropertyConstraint('car_size', new \App\Validator\Car());
+
+        //location
+        $metadata->addPropertyConstraint('location', new NotBlank());
+
+        //contact_name
+        $metadata->addPropertyConstraint('contact_name', new NotBlank());
+
+        //contact_email
+        $metadata->addPropertyConstraint('contact_email', new Email());
+
     }
 }
