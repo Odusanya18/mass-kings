@@ -15,9 +15,15 @@ class CarValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ value }}', $value)
+        if (!is_integer($value)){
+            throw new UnexpectedValueException($value, 'int');
+        }
+
+        $packages = (new \ReflectionClass(\App\Entity\Car::class))->getConstants();
+        if (!in_array($value, $packages)){
+            $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ car_size }}', $value)
             ->addViolation();
+        }
     }
 }
