@@ -149,7 +149,7 @@ class Appointment
         return $this;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
     {
         //package
         $metadata->addPropertyConstraint('package', new NotBlank());

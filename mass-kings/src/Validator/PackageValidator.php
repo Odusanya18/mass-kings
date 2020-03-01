@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class PackageValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint) :void
     {
         /* @var $constraint \App\Validator\Package */
 

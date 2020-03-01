@@ -7,7 +7,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class NameValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint) :void
     {
         /* @var $constraint \App\Validator\Name */
 
